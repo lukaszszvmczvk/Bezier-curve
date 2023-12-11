@@ -153,15 +153,15 @@ namespace lab3
                 var p = new Vector2();
                 for (int i = 0; i < ControlPoints.Count; ++i)
                 {
-                    var n = Bernstein(i, t) * ControlPoints[i];
+                    var n = Bernstein(N, i, t) * ControlPoints[i];
                     p += n;
                 }
                 CurvePoints.Add(new Point((int)p.X, (int)p.Y));
             }
         }
-        private float Bernstein(int i, float t)
+        private float Bernstein(int n, int i, float t)
         {
-            return GetBinCoeff(N, i) * MathF.Pow(t, i) * MathF.Pow(1 - t, N - i);
+            return GetBinCoeff(n, i) * MathF.Pow(t, i) * MathF.Pow(1 - t, n - i);
         }
         public long GetBinCoeff(long n, long k)
         {
@@ -175,6 +175,18 @@ namespace lab3
                 r /= d;
             }
             return r;
+        }
+        private double BezierTangentAngle(float t)
+        {
+            var p = new Vector2();
+            for (int i = 0; i < ControlPoints.Count-1; ++i)
+            {
+                var n = Bernstein(N-1, i, t) * (ControlPoints[i + 1] - ControlPoints[i]);
+                p += n;
+            }
+            p *= N;
+            var angle = ((float)Math.Atan2(p.Y, p.X)) * (180 / Math.PI);
+            return angle;
         }
         public void Clear()
         {
