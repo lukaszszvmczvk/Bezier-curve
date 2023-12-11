@@ -6,6 +6,7 @@ namespace lab3
         public Form1()
         {
             InitializeComponent();
+            pictureBox.Image = new Bitmap(pictureBox.Width, pictureBox.Height);
             bezierCurve = new BezierCurve(pictureBox);
             visiblePoylineCheckBox.Checked = true;
         }

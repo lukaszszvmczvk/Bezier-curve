@@ -19,7 +19,7 @@ namespace lab3
         {
             get { return ControlPoints.Count - 1; }
         }
-        private List<Vector2> CurvePoints { get; set; }
+        private List<Point> CurvePoints { get; set; }
         private List<Vector2> ControlPoints { get; set; }
         public bool VisiblePolyline { get; set; }
 
@@ -37,32 +37,37 @@ namespace lab3
         public void InitializePoints()
         {
             ControlPoints = new List<Vector2>();
-            CurvePoints = new List<Vector2>();
+            CurvePoints = new List<Point>();
         }
         public void Draw()
         {
             Bitmap bitmap = new Bitmap(pictureBox.Size.Width, pictureBox.Size.Height);
 
             Pen pen = new Pen(Brushes.LightBlue, 2);
-            using(Graphics g = Graphics.FromImage(bitmap))
+            for(int i=0; i<ControlPoints.Count; ++i)
             {
-                for(int i=0; i<ControlPoints.Count; ++i)
+                if(i != ControlPoints.Count-1 && VisiblePolyline)
                 {
-                    if(i != ControlPoints.Count-1 && VisiblePolyline)
+                    var p1 = new PointF(ControlPoints[i].X, ControlPoints[i].Y);
+                    var p2 = new PointF(ControlPoints[i+1].X, ControlPoints[i+1].Y);
+                    using (Graphics g = Graphics.FromImage(bitmap))
                     {
-                        var p1 = new PointF(ControlPoints[i].X, ControlPoints[i].Y);
-                        var p2 = new PointF(ControlPoints[i+1].X, ControlPoints[i+1].Y);
-
                         g.DrawLine(pen, p1,p2);
                     }
+                }
+                using (Graphics g = Graphics.FromImage(bitmap))
+                {
                     g.FillEllipse(Brushes.Red, ControlPoints[i].X - r, ControlPoints[i].Y - r, 2 * r, 2 * r);
                 }
             }
+
             foreach(var pt in CurvePoints)
             {
-                bitmap.SetPixel((int)pt.X,(int)pt.Y,Color.Black);
+                bitmap.SetPixel(pt.X, pt.Y, Color.Black);
             }
+            pictureBox.Image.Dispose();
             pictureBox.Image = bitmap;
+            pictureBox.Refresh();
         }
         private void canvasMouseDown(object sender, MouseEventArgs e)
         {
@@ -92,6 +97,7 @@ namespace lab3
                 ComputeBezierCurve();
                 Draw();
             }
+
         }
         public bool SelectPoint(MouseEventArgs e)
         {
@@ -124,7 +130,7 @@ namespace lab3
                     Vector2 bn = Bernstein(i, t) * ControlPoints[i];
                     p += bn;
                 }
-                CurvePoints.Add(p);
+                CurvePoints.Add(new Point((int)p.X, (int)p.Y));
             }
         }
         private float Bernstein(int i, float t)
