@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             tableLayoutPanel1 = new TableLayoutPanel();
-            pictureBox = new PictureBox();
+            pictureBox = new DoubleBufferedPictureBox();
             panel1 = new Panel();
             button1 = new Button();
             visiblePoylineCheckBox = new CheckBox();
@@ -114,7 +114,7 @@
         #endregion
 
         private TableLayoutPanel tableLayoutPanel1;
-        private PictureBox pictureBox;
+        private DoubleBufferedPictureBox pictureBox;
         private Panel panel1;
         private CheckBox visiblePoylineCheckBox;
         private Button button1;

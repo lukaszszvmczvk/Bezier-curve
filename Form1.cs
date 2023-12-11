@@ -12,7 +12,7 @@ namespace lab3
 
         private void button1_Click(object sender, EventArgs e)
         {
-            bezierCurve.ControlPoints.Clear();
+            bezierCurve.Clear();
             bezierCurve.Draw();
         }
 
@@ -20,6 +20,14 @@ namespace lab3
         {
             bezierCurve.VisiblePolyline = visiblePoylineCheckBox.Checked;
             bezierCurve.Draw();
+        }
+    }
+
+    public class DoubleBufferedPictureBox : PictureBox
+    {
+        public DoubleBufferedPictureBox()
+        {
+            DoubleBuffered = true;
         }
     }
 }

@@ -17,11 +17,11 @@ namespace lab3
         int? selectedPointId = null;
         private int N
         {
-            get { return ControlPoints.Count; }
+            get { return ControlPoints.Count - 1; }
         }
-        public List<Vector2> ControlPoints { get; set; }
+        private List<Vector2> CurvePoints { get; set; }
+        private List<Vector2> ControlPoints { get; set; }
         public bool VisiblePolyline { get; set; }
-
 
         public BezierCurve(PictureBox pictureBox)
         {
@@ -37,10 +37,11 @@ namespace lab3
         public void InitializePoints()
         {
             ControlPoints = new List<Vector2>();
+            CurvePoints = new List<Vector2>();
         }
         public void Draw()
         {
-            Bitmap bitmap = new Bitmap(pictureBox.Width, pictureBox.Height);
+            Bitmap bitmap = new Bitmap(pictureBox.Size.Width, pictureBox.Size.Height);
 
             Pen pen = new Pen(Brushes.LightBlue, 2);
             using(Graphics g = Graphics.FromImage(bitmap))
@@ -57,6 +58,10 @@ namespace lab3
                     g.FillEllipse(Brushes.Red, ControlPoints[i].X - r, ControlPoints[i].Y - r, 2 * r, 2 * r);
                 }
             }
+            foreach(var pt in CurvePoints)
+            {
+                bitmap.SetPixel((int)pt.X,(int)pt.Y,Color.Black);
+            }
             pictureBox.Image = bitmap;
         }
         private void canvasMouseDown(object sender, MouseEventArgs e)
@@ -67,8 +72,9 @@ namespace lab3
                 if(!isPointSelected)
                 {
                     ControlPoints.Add(new Vector2(e.X, e.Y));
-                    Draw();
                 }
+                ComputeBezierCurve();
+                Draw();
             }
         }
         private void PictureBox_MouseUp(object? sender, MouseEventArgs e)
@@ -83,6 +89,7 @@ namespace lab3
             if (selectedPointId != null)
             {
                 ControlPoints[selectedPointId.Value] = new Vector2(e.X, e.Y);
+                ComputeBezierCurve();
                 Draw();
             }
         }
@@ -104,11 +111,11 @@ namespace lab3
             int Y = e.Y;
             return Math.Abs(X - p.X) <= r && Math.Abs(Y - p.Y) <= r;
         }
-        private List<Vector2> ComputeBezierCurve()
+        private void ComputeBezierCurve()
         {
-            List<Vector2> points = new List<Vector2>();
+            CurvePoints.Clear();
 
-            float interval = 0.01f;
+            float interval = 0.0001f;
             for (float t = 0.0f; t <= 1.0f + interval - 0.0001f; t += interval)
             {
                 Vector2 p = new Vector2();
@@ -117,9 +124,8 @@ namespace lab3
                     Vector2 bn = Bernstein(i, t) * ControlPoints[i];
                     p += bn;
                 }
-                points.Add(p);
+                CurvePoints.Add(p);
             }
-            return points;
         }
         private float Bernstein(int i, float t)
         {
@@ -137,6 +143,11 @@ namespace lab3
                 r /= d;
             }
             return r;
+        }
+        public void Clear()
+        {
+            CurvePoints.Clear();
+            ControlPoints.Clear();
         }
     }
 }
