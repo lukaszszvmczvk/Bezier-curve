@@ -31,11 +31,16 @@
             tableLayoutPanel1 = new TableLayoutPanel();
             pictureBox = new DoubleBufferedPictureBox();
             panel1 = new Panel();
+            groupBox1 = new GroupBox();
+            button2 = new Button();
             button1 = new Button();
             visiblePoylineCheckBox = new CheckBox();
+            imagePictureBox = new PictureBox();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox).BeginInit();
             panel1.SuspendLayout();
+            groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)imagePictureBox).BeginInit();
             SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -65,6 +70,7 @@
             // panel1
             // 
             panel1.BackColor = SystemColors.ControlLight;
+            panel1.Controls.Add(groupBox1);
             panel1.Controls.Add(button1);
             panel1.Controls.Add(visiblePoylineCheckBox);
             panel1.Dock = DockStyle.Fill;
@@ -72,6 +78,27 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(164, 847);
             panel1.TabIndex = 1;
+            // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(imagePictureBox);
+            groupBox1.Controls.Add(button2);
+            groupBox1.Location = new Point(3, 74);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(158, 125);
+            groupBox1.TabIndex = 4;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "Image";
+            // 
+            // button2
+            // 
+            button2.Location = new Point(0, 90);
+            button2.Name = "button2";
+            button2.Size = new Size(158, 29);
+            button2.TabIndex = 0;
+            button2.Text = "Select image";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
             // 
             // button1
             // 
@@ -94,6 +121,15 @@
             visiblePoylineCheckBox.UseVisualStyleBackColor = true;
             visiblePoylineCheckBox.CheckedChanged += visiblePoylineCheckBox_CheckedChanged;
             // 
+            // imagePictureBox
+            // 
+            imagePictureBox.BackColor = SystemColors.AppWorkspace;
+            imagePictureBox.Location = new Point(27, 22);
+            imagePictureBox.Name = "imagePictureBox";
+            imagePictureBox.Size = new Size(105, 62);
+            imagePictureBox.TabIndex = 1;
+            imagePictureBox.TabStop = false;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -108,6 +144,8 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            groupBox1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)imagePictureBox).EndInit();
             ResumeLayout(false);
         }
 
@@ -118,5 +156,8 @@
         private Panel panel1;
         private CheckBox visiblePoylineCheckBox;
         private Button button1;
+        private GroupBox groupBox1;
+        private Button button2;
+        private PictureBox imagePictureBox;
     }
 }

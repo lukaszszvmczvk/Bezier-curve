@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Numerics;
 using System.Reflection.Metadata.Ecma335;
@@ -14,6 +15,7 @@ namespace lab3
     {
         private PictureBox pictureBox;
         private int r = 10;
+        private float interval = 0.0001f;
         int? selectedPointId = null;
         private int N
         {
@@ -22,6 +24,7 @@ namespace lab3
         private List<Point> CurvePoints { get; set; }
         private List<Vector2> ControlPoints { get; set; }
         public bool VisiblePolyline { get; set; }
+        public Bitmap? Img { get; set; }
 
         public BezierCurve(PictureBox pictureBox)
         {
@@ -30,6 +33,7 @@ namespace lab3
             pictureBox.MouseDown += canvasMouseDown;
             pictureBox.MouseUp += PictureBox_MouseUp;
             pictureBox.MouseMove += PictureBox_MouseMove;
+            Img = null;
             InitializePoints();
             Draw();
         }
@@ -61,10 +65,17 @@ namespace lab3
                 }
             }
 
-            foreach(var pt in CurvePoints)
+            foreach (var pt in CurvePoints)
             {
                 bitmap.SetPixel(pt.X, pt.Y, Color.Black);
             }
+
+            if(ControlPoints.Count != 0 && Img != null)
+            {
+                using (Graphics g = Graphics.FromImage(bitmap))
+                    g.DrawImage(Img, new Point((int)ControlPoints[0].X - Img.Width / 2, (int)ControlPoints[0].Y - Img.Height / 2));
+            }
+
             pictureBox.Image.Dispose();
             pictureBox.Image = bitmap;
             pictureBox.Refresh();
@@ -120,15 +131,13 @@ namespace lab3
         private void ComputeBezierCurve()
         {
             CurvePoints.Clear();
-
-            float interval = 0.0001f;
-            for (float t = 0.0f; t <= 1.0f + interval - 0.0001f; t += interval)
+            for (float t = 0.0f; t <= 1.0f; t += interval)
             {
-                Vector2 p = new Vector2();
+                var p = new Vector2();
                 for (int i = 0; i < ControlPoints.Count; ++i)
                 {
-                    Vector2 bn = Bernstein(i, t) * ControlPoints[i];
-                    p += bn;
+                    var n = Bernstein(i, t) * ControlPoints[i];
+                    p += n;
                 }
                 CurvePoints.Add(new Point((int)p.X, (int)p.Y));
             }
@@ -154,6 +163,7 @@ namespace lab3
         {
             CurvePoints.Clear();
             ControlPoints.Clear();
+            Img = null;
         }
     }
 }

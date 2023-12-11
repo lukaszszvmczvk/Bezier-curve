@@ -22,6 +22,23 @@ namespace lab3
             bezierCurve.VisiblePolyline = visiblePoylineCheckBox.Checked;
             bezierCurve.Draw();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+
+            openFileDialog1.Filter = "Pliki obrazów (*.jpg, *.jpeg, *.png, *.gif)|*.jpg; *.jpeg; *.png; *.gif";
+            openFileDialog1.Title = "Wybierz obraz";
+
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                string filePath = openFileDialog1.FileName;
+                var bmp = new Bitmap(filePath);
+                bezierCurve.Img = new Bitmap(bmp, 150, 150);
+                imagePictureBox.Image = new Bitmap(bmp, imagePictureBox.Width, imagePictureBox.Height);
+                bezierCurve.Draw();
+            }
+        }
     }
 
     public class DoubleBufferedPictureBox : PictureBox
