@@ -70,10 +70,27 @@ namespace lab3
                 bitmap.SetPixel(pt.X, pt.Y, Color.Black);
             }
 
-            if(ControlPoints.Count != 0 && Img != null)
+            if (ControlPoints.Count != 0 && Img != null)
             {
+                Bitmap rotatedBitmap = new Bitmap(Img.Width+100, Img.Height+100);
+
+                rotatedBitmap.SetResolution(Img.HorizontalResolution, Img.VerticalResolution);
+
+                using (Graphics g = Graphics.FromImage(rotatedBitmap))
+                {
+                    float angle = 30f;
+
+                    g.TranslateTransform((float)Img.Width / 2, (float)Img.Height / 2);
+
+                    g.RotateTransform(angle);
+
+                    g.TranslateTransform(-(float)Img.Width / 2, -(float)Img.Height / 2);
+
+                    g.DrawImage(Img, new Point(50, 50));
+                }
+
                 using (Graphics g = Graphics.FromImage(bitmap))
-                    g.DrawImage(Img, new Point((int)ControlPoints[0].X - Img.Width / 2, (int)ControlPoints[0].Y - Img.Height / 2));
+                    g.DrawImage(rotatedBitmap, new Point((int)ControlPoints[0].X - rotatedBitmap.Width / 2, (int)ControlPoints[0].Y - rotatedBitmap.Height / 2));
             }
 
             pictureBox.Image.Dispose();
