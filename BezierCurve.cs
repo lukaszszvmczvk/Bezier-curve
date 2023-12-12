@@ -25,6 +25,7 @@ namespace lab3
         private List<Vector2> ControlPoints { get; set; }
         public bool VisiblePolyline { get; set; }
         public Bitmap? Img { get; set; }
+        public float pos { get; set; }
 
         public BezierCurve(PictureBox pictureBox)
         {
@@ -70,7 +71,9 @@ namespace lab3
                 bitmap.SetPixel(pt.X, pt.Y, Color.Black);
             }
 
-            if (ControlPoints.Count != 0 && Img != null)
+            var angle = BezierTangentAngle(pos);
+            var p = GetPointOnCurve(pos);
+            if (ControlPoints.Count > 2 && Img != null)
             {
                 Bitmap rotatedBitmap = new Bitmap(Img.Width+100, Img.Height+100);
 
@@ -78,19 +81,17 @@ namespace lab3
 
                 using (Graphics g = Graphics.FromImage(rotatedBitmap))
                 {
-                    float angle = 30f;
-
                     g.TranslateTransform((float)Img.Width / 2, (float)Img.Height / 2);
 
                     g.RotateTransform(angle);
 
-                    g.TranslateTransform(-(float)Img.Width / 2, -(float)Img.Height / 2);
+                    g.TranslateTransform(-(float)Img.Width / 2, - (float)Img.Height / 2);
 
                     g.DrawImage(Img, new Point(50, 50));
                 }
 
                 using (Graphics g = Graphics.FromImage(bitmap))
-                    g.DrawImage(rotatedBitmap, new Point((int)ControlPoints[0].X - rotatedBitmap.Width / 2, (int)ControlPoints[0].Y - rotatedBitmap.Height / 2));
+                    g.DrawImage(rotatedBitmap, new Point((int)p.X - rotatedBitmap.Width / 2, (int)p.Y - rotatedBitmap.Height / 2));
             }
 
             pictureBox.Image.Dispose();
@@ -150,14 +151,19 @@ namespace lab3
             CurvePoints.Clear();
             for (float t = 0.0f; t <= 1.0f; t += interval)
             {
-                var p = new Vector2();
-                for (int i = 0; i < ControlPoints.Count; ++i)
-                {
-                    var n = Bernstein(N, i, t) * ControlPoints[i];
-                    p += n;
-                }
+                var p = GetPointOnCurve(t);
                 CurvePoints.Add(new Point((int)p.X, (int)p.Y));
             }
+        }
+        private Vector2 GetPointOnCurve(float t)
+        {
+            var p = new Vector2();
+            for (int i = 0; i < ControlPoints.Count; ++i)
+            {
+                var n = Bernstein(N, i, t) * ControlPoints[i];
+                p += n;
+            }
+            return p;
         }
         private float Bernstein(int n, int i, float t)
         {
@@ -176,7 +182,7 @@ namespace lab3
             }
             return r;
         }
-        private double BezierTangentAngle(float t)
+        private float BezierTangentAngle(float t)
         {
             var p = new Vector2();
             for (int i = 0; i < ControlPoints.Count-1; ++i)
@@ -185,8 +191,15 @@ namespace lab3
                 p += n;
             }
             p *= N;
-            var angle = ((float)Math.Atan2(p.Y, p.X)) * (180 / Math.PI);
+            var angle = (float)(Math.Atan2(p.Y, p.X) * (180 / Math.PI));
             return angle;
+        }
+        public void UpdatePos()
+        {
+            if(pos <= 1.0f)
+            {
+                pos += 0.001f;
+            }
         }
         public void Clear()
         {

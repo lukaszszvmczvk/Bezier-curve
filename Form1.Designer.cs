@@ -32,10 +32,11 @@
             pictureBox = new DoubleBufferedPictureBox();
             panel1 = new Panel();
             groupBox1 = new GroupBox();
+            imagePictureBox = new PictureBox();
             button2 = new Button();
             button1 = new Button();
             visiblePoylineCheckBox = new CheckBox();
-            imagePictureBox = new PictureBox();
+            checkBox1 = new CheckBox();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox).BeginInit();
             panel1.SuspendLayout();
@@ -70,6 +71,7 @@
             // panel1
             // 
             panel1.BackColor = SystemColors.ControlLight;
+            panel1.Controls.Add(checkBox1);
             panel1.Controls.Add(groupBox1);
             panel1.Controls.Add(button1);
             panel1.Controls.Add(visiblePoylineCheckBox);
@@ -89,6 +91,15 @@
             groupBox1.TabIndex = 4;
             groupBox1.TabStop = false;
             groupBox1.Text = "Image";
+            // 
+            // imagePictureBox
+            // 
+            imagePictureBox.BackColor = SystemColors.AppWorkspace;
+            imagePictureBox.Location = new Point(27, 22);
+            imagePictureBox.Name = "imagePictureBox";
+            imagePictureBox.Size = new Size(105, 62);
+            imagePictureBox.TabIndex = 1;
+            imagePictureBox.TabStop = false;
             // 
             // button2
             // 
@@ -121,14 +132,16 @@
             visiblePoylineCheckBox.UseVisualStyleBackColor = true;
             visiblePoylineCheckBox.CheckedChanged += visiblePoylineCheckBox_CheckedChanged;
             // 
-            // imagePictureBox
+            // checkBox1
             // 
-            imagePictureBox.BackColor = SystemColors.AppWorkspace;
-            imagePictureBox.Location = new Point(27, 22);
-            imagePictureBox.Name = "imagePictureBox";
-            imagePictureBox.Size = new Size(105, 62);
-            imagePictureBox.TabIndex = 1;
-            imagePictureBox.TabStop = false;
+            checkBox1.AutoSize = true;
+            checkBox1.Location = new Point(3, 205);
+            checkBox1.Name = "checkBox1";
+            checkBox1.Size = new Size(96, 24);
+            checkBox1.TabIndex = 5;
+            checkBox1.Text = "Animaton";
+            checkBox1.UseVisualStyleBackColor = true;
+            checkBox1.CheckedChanged += checkBox1_CheckedChanged;
             // 
             // Form1
             // 
@@ -159,5 +172,6 @@
         private GroupBox groupBox1;
         private Button button2;
         private PictureBox imagePictureBox;
+        private CheckBox checkBox1;
     }
 }

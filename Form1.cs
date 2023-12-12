@@ -3,12 +3,22 @@ namespace lab3
     public partial class Form1 : Form
     {
         BezierCurve bezierCurve;
+        System.Windows.Forms.Timer timer;
         public Form1()
         {
             InitializeComponent();
             pictureBox.Image = new Bitmap(pictureBox.Width, pictureBox.Height);
             bezierCurve = new BezierCurve(pictureBox);
             visiblePoylineCheckBox.Checked = true;
+            timer = new System.Windows.Forms.Timer();
+            timer.Tick += Timer_Tick;
+            timer.Interval = 1;
+        }
+
+        private void Timer_Tick(object? sender, EventArgs e)
+        {
+            bezierCurve.Draw();
+            bezierCurve.UpdatePos();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -37,6 +47,18 @@ namespace lab3
                 bezierCurve.Img = new Bitmap(bmp, 150, 150);
                 imagePictureBox.Image = new Bitmap(bmp, imagePictureBox.Width, imagePictureBox.Height);
                 bezierCurve.Draw();
+            }
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if(checkBox1.Checked)
+            {
+                timer.Start();
+            }
+            else
+            {
+                timer.Stop();
             }
         }
     }
