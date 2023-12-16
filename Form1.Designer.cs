@@ -40,12 +40,16 @@
             button2 = new Button();
             button1 = new Button();
             visiblePoylineCheckBox = new CheckBox();
+            groupBox3 = new GroupBox();
+            radioButton3 = new RadioButton();
+            radioButton4 = new RadioButton();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox).BeginInit();
             panel1.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)imagePictureBox).BeginInit();
+            groupBox3.SuspendLayout();
             SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -75,8 +79,8 @@
             // panel1
             // 
             panel1.BackColor = SystemColors.ControlLight;
+            panel1.Controls.Add(groupBox3);
             panel1.Controls.Add(groupBox2);
-            panel1.Controls.Add(checkBox1);
             panel1.Controls.Add(groupBox1);
             panel1.Controls.Add(button1);
             panel1.Controls.Add(visiblePoylineCheckBox);
@@ -90,7 +94,7 @@
             // 
             groupBox2.Controls.Add(radioButton2);
             groupBox2.Controls.Add(radioButton1);
-            groupBox2.Location = new Point(7, 235);
+            groupBox2.Location = new Point(7, 205);
             groupBox2.Name = "groupBox2";
             groupBox2.Size = new Size(154, 91);
             groupBox2.TabIndex = 6;
@@ -123,7 +127,7 @@
             // checkBox1
             // 
             checkBox1.AutoSize = true;
-            checkBox1.Location = new Point(3, 205);
+            checkBox1.Location = new Point(6, 26);
             checkBox1.Name = "checkBox1";
             checkBox1.Size = new Size(96, 24);
             checkBox1.TabIndex = 5;
@@ -182,6 +186,41 @@
             visiblePoylineCheckBox.UseVisualStyleBackColor = true;
             visiblePoylineCheckBox.CheckedChanged += visiblePoylineCheckBox_CheckedChanged;
             // 
+            // groupBox3
+            // 
+            groupBox3.Controls.Add(radioButton4);
+            groupBox3.Controls.Add(radioButton3);
+            groupBox3.Controls.Add(checkBox1);
+            groupBox3.Location = new Point(7, 302);
+            groupBox3.Name = "groupBox3";
+            groupBox3.Size = new Size(148, 114);
+            groupBox3.TabIndex = 7;
+            groupBox3.TabStop = false;
+            groupBox3.Text = "Animation";
+            // 
+            // radioButton3
+            // 
+            radioButton3.AutoSize = true;
+            radioButton3.Location = new Point(6, 84);
+            radioButton3.Name = "radioButton3";
+            radioButton3.Size = new Size(87, 24);
+            radioButton3.TabIndex = 6;
+            radioButton3.TabStop = true;
+            radioButton3.Text = "Rotation";
+            radioButton3.UseVisualStyleBackColor = true;
+            // 
+            // radioButton4
+            // 
+            radioButton4.AutoSize = true;
+            radioButton4.Location = new Point(6, 56);
+            radioButton4.Name = "radioButton4";
+            radioButton4.Size = new Size(140, 24);
+            radioButton4.TabIndex = 7;
+            radioButton4.TabStop = true;
+            radioButton4.Text = "Moving on curve";
+            radioButton4.UseVisualStyleBackColor = true;
+            radioButton4.CheckedChanged += radioButton4_CheckedChanged;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -200,6 +239,8 @@
             groupBox2.PerformLayout();
             groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)imagePictureBox).EndInit();
+            groupBox3.ResumeLayout(false);
+            groupBox3.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -217,5 +258,8 @@
         private GroupBox groupBox2;
         private RadioButton radioButton2;
         private RadioButton radioButton1;
+        private GroupBox groupBox3;
+        private RadioButton radioButton4;
+        private RadioButton radioButton3;
     }
 }

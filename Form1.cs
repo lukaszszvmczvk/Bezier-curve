@@ -14,12 +14,20 @@ namespace lab3
             timer.Tick += Timer_Tick;
             timer.Interval = 1;
             radioButton1.Checked = true;
+            radioButton4.Checked = true;
         }
 
         private void Timer_Tick(object? sender, EventArgs e)
         {
+            if(radioButton4.Checked)
+            {
+                bezierCurve.UpdatePos();
+            }
+            else
+            {
+
+            }
             bezierCurve.Draw();
-            bezierCurve.UpdatePos();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -82,6 +90,18 @@ namespace lab3
             else
             {
                 bezierCurve.UseNaiveRotation = false;
+            }
+        }
+
+        private void radioButton4_CheckedChanged(object sender, EventArgs e)
+        {
+            if(radioButton4.Checked)
+            {
+                bezierCurve.RotateAnimation = false;
+            }
+            else
+            {
+                bezierCurve.RotateAnimation = true;
             }
         }
     }

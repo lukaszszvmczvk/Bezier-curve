@@ -28,6 +28,7 @@ namespace lab3
         public Bitmap? Img { get; set; }
         public float pos { get; set; }
         public bool UseNaiveRotation { get; set; }
+        public bool RotateAnimation { get; set; }
 
         public BezierCurve(PictureBox pictureBox)
         {
@@ -78,65 +79,28 @@ namespace lab3
             var p = GetPointOnCurve(pos);
             if (ControlPoints.Count > 2 && Img != null)
             {
-                Bitmap rotatedBitmap = RotateBitmap(angle);
-
-                using (Graphics g = Graphics.FromImage(bitmap))
+                if (!RotateAnimation)
                 {
-                    g.DrawImage(rotatedBitmap, new Point((int)p.X - rotatedBitmap.Width / 2, (int)p.Y - rotatedBitmap.Height / 2));
+                    Bitmap rotatedBitmap = RotateBitmap(angle);
+                    using (Graphics g = Graphics.FromImage(bitmap))
+                    {
+                        g.DrawImage(rotatedBitmap, new Point((int)p.X - rotatedBitmap.Width / 2, (int)p.Y - rotatedBitmap.Height / 2));
+                    }
                 }
+                else
+                {
+                    Bitmap rotatedBitmap = Img;
+                    using (Graphics g = Graphics.FromImage(bitmap))
+                    {
+                        g.DrawImage(rotatedBitmap, new Point((int)p.X - rotatedBitmap.Width / 2, (int)p.Y - rotatedBitmap.Height / 2));
+                    }
+                }
+
             }
 
             pictureBox.Image.Dispose();
             pictureBox.Image = bitmap;
             pictureBox.Refresh();
-        }
-        private void canvasMouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                var isPointSelected = SelectPoint(e);
-                if(!isPointSelected)
-                {
-                    ControlPoints.Add(new Vector2(e.X, e.Y));
-                }
-                ComputeBezierCurve();
-                Draw();
-            }
-        }
-        private void PictureBox_MouseUp(object? sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                selectedPointId = null;
-            }
-        }
-        private void PictureBox_MouseMove(object? sender, MouseEventArgs e)
-        {
-            if (selectedPointId != null)
-            {
-                ControlPoints[selectedPointId.Value] = new Vector2(e.X, e.Y);
-                ComputeBezierCurve();
-                Draw();
-            }
-
-        }
-        public bool SelectPoint(MouseEventArgs e)
-        {
-            for (int i = 0; i < ControlPoints.Count; ++i)
-            {
-                if (IsPointClicked(e, ControlPoints[i]))
-                {
-                    selectedPointId = i;
-                    return true;
-                }
-            }
-            return false;
-        }
-        private bool IsPointClicked(MouseEventArgs e, Vector2 p)
-        {
-            int X = e.X;
-            int Y = e.Y;
-            return Math.Abs(X - p.X) <= r && Math.Abs(Y - p.Y) <= r;
         }
         private void ComputeBezierCurve()
         {
@@ -185,21 +149,6 @@ namespace lab3
             p *= N;
             var angle = (float)(Math.Atan2(p.Y, p.X) * (180 / Math.PI));
             return angle;
-        }
-        public void UpdatePos()
-        {
-            pos += animationInterval;
-            if(pos >= 1)
-            {
-                pos = 1;
-                animationInterval = -animationInterval;
-            }
-
-            if(pos <= 0)
-            {
-                pos = 0;
-                animationInterval = -animationInterval;
-            }
         }
         private Bitmap RotateBitmap(float angle)
         {
@@ -254,6 +203,71 @@ namespace lab3
             }
 
             return rotatedBitmap;
+        }
+
+        // Utility functions
+        public bool SelectPoint(MouseEventArgs e)
+        {
+            for (int i = 0; i < ControlPoints.Count; ++i)
+            {
+                if (IsPointClicked(e, ControlPoints[i]))
+                {
+                    selectedPointId = i;
+                    return true;
+                }
+            }
+            return false;
+        }
+        private bool IsPointClicked(MouseEventArgs e, Vector2 p)
+        {
+            int X = e.X;
+            int Y = e.Y;
+            return Math.Abs(X - p.X) <= r && Math.Abs(Y - p.Y) <= r;
+        }
+        private void canvasMouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                var isPointSelected = SelectPoint(e);
+                if(!isPointSelected)
+                {
+                    ControlPoints.Add(new Vector2(e.X, e.Y));
+                }
+                ComputeBezierCurve();
+                Draw();
+            }
+        }
+        private void PictureBox_MouseUp(object? sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                selectedPointId = null;
+            }
+        }
+        private void PictureBox_MouseMove(object? sender, MouseEventArgs e)
+        {
+            if (selectedPointId != null)
+            {
+                ControlPoints[selectedPointId.Value] = new Vector2(e.X, e.Y);
+                ComputeBezierCurve();
+                Draw();
+            }
+
+        }
+        public void UpdatePos()
+        {
+            pos += animationInterval;
+            if(pos >= 1)
+            {
+                pos = 1;
+                animationInterval = -animationInterval;
+            }
+
+            if(pos <= 0)
+            {
+                pos = 0;
+                animationInterval = -animationInterval;
+            }
         }
         public void Clear()
         {
