@@ -44,7 +44,14 @@ namespace lab3
             {
                 string filePath = openFileDialog1.FileName;
                 var bmp = new Bitmap(filePath);
-                bezierCurve.Img = new Bitmap(bmp, 150, 150);
+                var tmpBmp = new Bitmap(bmp, 150, 150);
+                var bitmap = new Bitmap(300, 300);
+                using (Graphics g = Graphics.FromImage(bitmap))
+                {
+                    var x = tmpBmp.Width / 2;
+                    g.DrawImage(tmpBmp, new Point(x, x));
+                }
+                bezierCurve.Img = bitmap;
                 imagePictureBox.Image = new Bitmap(bmp, imagePictureBox.Width, imagePictureBox.Height);
                 bezierCurve.Draw();
             }

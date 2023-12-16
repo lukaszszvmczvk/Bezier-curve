@@ -75,23 +75,24 @@ namespace lab3
             var p = GetPointOnCurve(pos);
             if (ControlPoints.Count > 2 && Img != null)
             {
-                Bitmap rotatedBitmap = new Bitmap(Img.Width+100, Img.Height+100);
+                Bitmap rotatedBitmap = new Bitmap(Img.Width, Img.Height);
 
                 rotatedBitmap.SetResolution(Img.HorizontalResolution, Img.VerticalResolution);
 
                 using (Graphics g = Graphics.FromImage(rotatedBitmap))
                 {
                     g.TranslateTransform((float)Img.Width / 2, (float)Img.Height / 2);
-
                     g.RotateTransform(angle);
+                    g.TranslateTransform(-(float)Img.Width / 2, -(float)Img.Height / 2);
 
-                    g.TranslateTransform(-(float)Img.Width / 2, - (float)Img.Height / 2);
-
-                    g.DrawImage(Img, new Point(50, 50));
+                    g.DrawImage(Img, new Point(0, 0));
                 }
 
                 using (Graphics g = Graphics.FromImage(bitmap))
+                {
                     g.DrawImage(rotatedBitmap, new Point((int)p.X - rotatedBitmap.Width / 2, (int)p.Y - rotatedBitmap.Height / 2));
+                    g.DrawRectangle(pen, (int)p.X - rotatedBitmap.Width / 2, (int)p.Y - rotatedBitmap.Height / 2, rotatedBitmap.Width, rotatedBitmap.Height);
+                }
             }
 
             pictureBox.Image.Dispose();
@@ -198,8 +199,12 @@ namespace lab3
         {
             if(pos <= 1.0f)
             {
-                pos += 0.001f;
+                pos += 0.01f;
             }
+        }
+        private Bitmap NaiveRotate(Bitmap bitmap, float angle)
+        {
+            return new Bitmap(20,20);
         }
         public void Clear()
         {
