@@ -16,6 +16,7 @@ namespace lab3
         private PictureBox pictureBox;
         private int r = 10;
         private float interval = 0.0001f;
+        private float animationInterval = 0.01f;
         int? selectedPointId = null;
         private int N
         {
@@ -75,23 +76,11 @@ namespace lab3
             var p = GetPointOnCurve(pos);
             if (ControlPoints.Count > 2 && Img != null)
             {
-                Bitmap rotatedBitmap = new Bitmap(Img.Width, Img.Height);
-
-                rotatedBitmap.SetResolution(Img.HorizontalResolution, Img.VerticalResolution);
-
-                using (Graphics g = Graphics.FromImage(rotatedBitmap))
-                {
-                    g.TranslateTransform((float)Img.Width / 2, (float)Img.Height / 2);
-                    g.RotateTransform(angle);
-                    g.TranslateTransform(-(float)Img.Width / 2, -(float)Img.Height / 2);
-
-                    g.DrawImage(Img, new Point(0, 0));
-                }
+                Bitmap rotatedBitmap = RotateBitmap(angle);
 
                 using (Graphics g = Graphics.FromImage(bitmap))
                 {
                     g.DrawImage(rotatedBitmap, new Point((int)p.X - rotatedBitmap.Width / 2, (int)p.Y - rotatedBitmap.Height / 2));
-                    g.DrawRectangle(pen, (int)p.X - rotatedBitmap.Width / 2, (int)p.Y - rotatedBitmap.Height / 2, rotatedBitmap.Width, rotatedBitmap.Height);
                 }
             }
 
@@ -197,10 +186,34 @@ namespace lab3
         }
         public void UpdatePos()
         {
-            if(pos <= 1.0f)
+            pos += animationInterval;
+            if(pos >= 1)
             {
-                pos += 0.01f;
+                pos = 1;
+                animationInterval = -animationInterval;
             }
+
+            if(pos <= 0)
+            {
+                pos = 0;
+                animationInterval = -animationInterval;
+            }
+        }
+        private Bitmap RotateBitmap(float angle)
+        {
+            Bitmap rotatedBitmap = new Bitmap(Img.Width, Img.Height);
+
+            rotatedBitmap.SetResolution(Img.HorizontalResolution, Img.VerticalResolution);
+
+            using (Graphics g = Graphics.FromImage(rotatedBitmap))
+            {
+                g.TranslateTransform((float)Img.Width / 2, (float)Img.Height / 2);
+                g.RotateTransform(angle);
+                g.TranslateTransform(-(float)Img.Width / 2, -(float)Img.Height / 2);
+
+                g.DrawImage(Img, new Point(0, 0));
+            }
+            return rotatedBitmap;
         }
         private Bitmap NaiveRotate(Bitmap bitmap, float angle)
         {

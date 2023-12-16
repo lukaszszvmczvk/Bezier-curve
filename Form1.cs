@@ -24,6 +24,10 @@ namespace lab3
         private void button1_Click(object sender, EventArgs e)
         {
             bezierCurve.Clear();
+            imagePictureBox.Image = null;
+            checkBox1.Checked = false;
+            timer.Stop();
+            bezierCurve.pos = 0;
             bezierCurve.Draw();
         }
 
