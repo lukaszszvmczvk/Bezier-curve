@@ -25,7 +25,7 @@ namespace lab3
             }
             else
             {
-
+                bezierCurve.UpdateAngle();
             }
             bezierCurve.Draw();
         }

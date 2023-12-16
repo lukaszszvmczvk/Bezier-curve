@@ -17,6 +17,7 @@ namespace lab3
         private int r = 10;
         private float interval = 0.0001f;
         private float animationInterval = 0.01f;
+        private int rotateAngle = 0;
         int? selectedPointId = null;
         private int N
         {
@@ -89,7 +90,7 @@ namespace lab3
                 }
                 else
                 {
-                    Bitmap rotatedBitmap = Img;
+                    Bitmap rotatedBitmap = RotateBitmap(rotateAngle);
                     using (Graphics g = Graphics.FromImage(bitmap))
                     {
                         g.DrawImage(rotatedBitmap, new Point((int)p.X - rotatedBitmap.Width / 2, (int)p.Y - rotatedBitmap.Height / 2));
@@ -268,6 +269,12 @@ namespace lab3
                 pos = 0;
                 animationInterval = -animationInterval;
             }
+        }
+        public void UpdateAngle()
+        {
+            rotateAngle++;
+            if (rotateAngle == 360)
+                rotateAngle = 0;
         }
         public void Clear()
         {
