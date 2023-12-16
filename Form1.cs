@@ -13,6 +13,7 @@ namespace lab3
             timer = new System.Windows.Forms.Timer();
             timer.Tick += Timer_Tick;
             timer.Interval = 1;
+            radioButton1.Checked = true;
         }
 
         private void Timer_Tick(object? sender, EventArgs e)
@@ -27,7 +28,6 @@ namespace lab3
             imagePictureBox.Image = null;
             checkBox1.Checked = false;
             timer.Stop();
-            bezierCurve.pos = 0;
             bezierCurve.Draw();
         }
 
@@ -63,13 +63,25 @@ namespace lab3
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            if(checkBox1.Checked)
+            if (checkBox1.Checked)
             {
                 timer.Start();
             }
             else
             {
                 timer.Stop();
+            }
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton1.Checked)
+            {
+                bezierCurve.UseNaiveRotation = true;
+            }
+            else
+            {
+                bezierCurve.UseNaiveRotation = false;
             }
         }
     }

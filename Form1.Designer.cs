@@ -31,15 +31,19 @@
             tableLayoutPanel1 = new TableLayoutPanel();
             pictureBox = new DoubleBufferedPictureBox();
             panel1 = new Panel();
+            groupBox2 = new GroupBox();
+            radioButton2 = new RadioButton();
+            radioButton1 = new RadioButton();
+            checkBox1 = new CheckBox();
             groupBox1 = new GroupBox();
             imagePictureBox = new PictureBox();
             button2 = new Button();
             button1 = new Button();
             visiblePoylineCheckBox = new CheckBox();
-            checkBox1 = new CheckBox();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox).BeginInit();
             panel1.SuspendLayout();
+            groupBox2.SuspendLayout();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)imagePictureBox).BeginInit();
             SuspendLayout();
@@ -71,6 +75,7 @@
             // panel1
             // 
             panel1.BackColor = SystemColors.ControlLight;
+            panel1.Controls.Add(groupBox2);
             panel1.Controls.Add(checkBox1);
             panel1.Controls.Add(groupBox1);
             panel1.Controls.Add(button1);
@@ -80,6 +85,51 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(164, 847);
             panel1.TabIndex = 1;
+            // 
+            // groupBox2
+            // 
+            groupBox2.Controls.Add(radioButton2);
+            groupBox2.Controls.Add(radioButton1);
+            groupBox2.Location = new Point(7, 235);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Size = new Size(154, 91);
+            groupBox2.TabIndex = 6;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "Rotation";
+            // 
+            // radioButton2
+            // 
+            radioButton2.AutoSize = true;
+            radioButton2.Location = new Point(11, 56);
+            radioButton2.Name = "radioButton2";
+            radioButton2.Size = new Size(117, 24);
+            radioButton2.TabIndex = 1;
+            radioButton2.TabStop = true;
+            radioButton2.Text = "With filtering";
+            radioButton2.UseVisualStyleBackColor = true;
+            // 
+            // radioButton1
+            // 
+            radioButton1.AutoSize = true;
+            radioButton1.Location = new Point(11, 26);
+            radioButton1.Name = "radioButton1";
+            radioButton1.Size = new Size(68, 24);
+            radioButton1.TabIndex = 0;
+            radioButton1.TabStop = true;
+            radioButton1.Text = "Naive";
+            radioButton1.UseVisualStyleBackColor = true;
+            radioButton1.CheckedChanged += radioButton1_CheckedChanged;
+            // 
+            // checkBox1
+            // 
+            checkBox1.AutoSize = true;
+            checkBox1.Location = new Point(3, 205);
+            checkBox1.Name = "checkBox1";
+            checkBox1.Size = new Size(96, 24);
+            checkBox1.TabIndex = 5;
+            checkBox1.Text = "Animaton";
+            checkBox1.UseVisualStyleBackColor = true;
+            checkBox1.CheckedChanged += checkBox1_CheckedChanged;
             // 
             // groupBox1
             // 
@@ -132,17 +182,6 @@
             visiblePoylineCheckBox.UseVisualStyleBackColor = true;
             visiblePoylineCheckBox.CheckedChanged += visiblePoylineCheckBox_CheckedChanged;
             // 
-            // checkBox1
-            // 
-            checkBox1.AutoSize = true;
-            checkBox1.Location = new Point(3, 205);
-            checkBox1.Name = "checkBox1";
-            checkBox1.Size = new Size(96, 24);
-            checkBox1.TabIndex = 5;
-            checkBox1.Text = "Animaton";
-            checkBox1.UseVisualStyleBackColor = true;
-            checkBox1.CheckedChanged += checkBox1_CheckedChanged;
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -157,6 +196,8 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            groupBox2.ResumeLayout(false);
+            groupBox2.PerformLayout();
             groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)imagePictureBox).EndInit();
             ResumeLayout(false);
@@ -173,5 +214,8 @@
         private Button button2;
         private PictureBox imagePictureBox;
         private CheckBox checkBox1;
+        private GroupBox groupBox2;
+        private RadioButton radioButton2;
+        private RadioButton radioButton1;
     }
 }

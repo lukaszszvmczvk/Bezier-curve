@@ -27,6 +27,7 @@ namespace lab3
         public bool VisiblePolyline { get; set; }
         public Bitmap? Img { get; set; }
         public float pos { get; set; }
+        public bool UseNaiveRotation { get; set; }
 
         public BezierCurve(PictureBox pictureBox)
         {
@@ -35,6 +36,7 @@ namespace lab3
             pictureBox.MouseDown += canvasMouseDown;
             pictureBox.MouseUp += PictureBox_MouseUp;
             pictureBox.MouseMove += PictureBox_MouseMove;
+            UseNaiveRotation = true;
             Img = null;
             InitializePoints();
             Draw();
@@ -201,28 +203,63 @@ namespace lab3
         }
         private Bitmap RotateBitmap(float angle)
         {
-            Bitmap rotatedBitmap = new Bitmap(Img.Width, Img.Height);
-
-            rotatedBitmap.SetResolution(Img.HorizontalResolution, Img.VerticalResolution);
-
-            using (Graphics g = Graphics.FromImage(rotatedBitmap))
+            if(UseNaiveRotation)
             {
-                g.TranslateTransform((float)Img.Width / 2, (float)Img.Height / 2);
-                g.RotateTransform(angle);
-                g.TranslateTransform(-(float)Img.Width / 2, -(float)Img.Height / 2);
-
-                g.DrawImage(Img, new Point(0, 0));
+                return NaiveRotate(angle);
             }
-            return rotatedBitmap;
+            else
+            {
+                Bitmap rotatedBitmap = new Bitmap(Img.Width, Img.Height);
+
+                rotatedBitmap.SetResolution(Img.HorizontalResolution, Img.VerticalResolution);
+
+                using (Graphics g = Graphics.FromImage(rotatedBitmap))
+                {
+                    g.TranslateTransform((float)Img.Width / 2, (float)Img.Height / 2);
+                    g.RotateTransform(angle);
+                    g.TranslateTransform(-(float)Img.Width / 2, -(float)Img.Height / 2);
+
+                    g.DrawImage(Img, new Point(0, 0));
+                }
+                return rotatedBitmap;
+            }
         }
-        private Bitmap NaiveRotate(Bitmap bitmap, float angle)
+        private Bitmap NaiveRotate(float degree)
         {
-            return new Bitmap(20,20);
+            double rads = degree * Math.PI / 180.0;
+
+            int width = Img.Width;
+            int height = Img.Height;
+
+            Bitmap rotatedBitmap = new Bitmap(width, height);
+
+            var centerX = width / 2;
+            var centerY = height / 2;
+
+            for (int i = 0; i < rotatedBitmap.Height; i++)
+            {
+                for (int j = 0; j < rotatedBitmap.Width; j++)
+                {
+                    var x = (i - centerX) * Math.Cos(rads) + (j - centerY) * Math.Sin(rads);
+                    var y = -(i - centerX) * Math.Sin(rads) + (j - centerY) * Math.Cos(rads);
+
+                    var sx = (int)Math.Round(x) + centerX;
+                    var sy = (int)Math.Round(y) + centerY;
+
+                    if (sx >= 0 && sy >= 0 && sx < Img.Height && sy < Img.Width)
+                    {
+                        rotatedBitmap.SetPixel(i, j, Img.GetPixel(sx, sy));
+                    }
+                }
+            }
+
+            return rotatedBitmap;
         }
         public void Clear()
         {
             CurvePoints.Clear();
             ControlPoints.Clear();
+            pos = 0;
             Img = null;
         }
     }
