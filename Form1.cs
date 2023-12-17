@@ -19,7 +19,7 @@ namespace lab3
 
         private void Timer_Tick(object? sender, EventArgs e)
         {
-            if(radioButton4.Checked)
+            if (radioButton4.Checked)
             {
                 bezierCurve.UpdatePos();
             }
@@ -62,7 +62,7 @@ namespace lab3
                 using (Graphics g = Graphics.FromImage(bitmap))
                 {
                     var x = (int)(size - 150) / 2;
-                    g.DrawImage(tmpBmp, new Point(x,x));
+                    g.DrawImage(tmpBmp, new Point(x, x));
                 }
                 bezierCurve.Img = bitmap;
                 imagePictureBox.Image = new Bitmap(bmp, imagePictureBox.Width, imagePictureBox.Height);
@@ -86,23 +86,35 @@ namespace lab3
         {
             if (radioButton1.Checked)
             {
-                bezierCurve.UseNaiveRotation = true;
-            }
-            else
-            {
-                bezierCurve.UseNaiveRotation = false;
+                bezierCurve.rotation = Rotation.naive;
             }
         }
 
         private void radioButton4_CheckedChanged(object sender, EventArgs e)
         {
-            if(radioButton4.Checked)
+            if (radioButton4.Checked)
             {
                 bezierCurve.RotateAnimation = false;
             }
             else
             {
                 bezierCurve.RotateAnimation = true;
+            }
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton2.Checked)
+            {
+                bezierCurve.rotation = Rotation.filter;
+            }
+        }
+
+        private void radioButton5_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton5.Checked)
+            {
+                bezierCurve.rotation = Rotation.graphics;
             }
         }
     }

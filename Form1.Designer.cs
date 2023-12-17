@@ -31,25 +31,26 @@
             tableLayoutPanel1 = new TableLayoutPanel();
             pictureBox = new DoubleBufferedPictureBox();
             panel1 = new Panel();
+            groupBox3 = new GroupBox();
+            radioButton4 = new RadioButton();
+            radioButton3 = new RadioButton();
+            checkBox1 = new CheckBox();
             groupBox2 = new GroupBox();
+            radioButton5 = new RadioButton();
             radioButton2 = new RadioButton();
             radioButton1 = new RadioButton();
-            checkBox1 = new CheckBox();
             groupBox1 = new GroupBox();
             imagePictureBox = new PictureBox();
             button2 = new Button();
             button1 = new Button();
             visiblePoylineCheckBox = new CheckBox();
-            groupBox3 = new GroupBox();
-            radioButton3 = new RadioButton();
-            radioButton4 = new RadioButton();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox).BeginInit();
             panel1.SuspendLayout();
+            groupBox3.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)imagePictureBox).BeginInit();
-            groupBox3.SuspendLayout();
             SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -90,16 +91,75 @@
             panel1.Size = new Size(164, 847);
             panel1.TabIndex = 1;
             // 
+            // groupBox3
+            // 
+            groupBox3.Controls.Add(radioButton4);
+            groupBox3.Controls.Add(radioButton3);
+            groupBox3.Controls.Add(checkBox1);
+            groupBox3.Location = new Point(7, 331);
+            groupBox3.Name = "groupBox3";
+            groupBox3.Size = new Size(148, 114);
+            groupBox3.TabIndex = 7;
+            groupBox3.TabStop = false;
+            groupBox3.Text = "Animation";
+            // 
+            // radioButton4
+            // 
+            radioButton4.AutoSize = true;
+            radioButton4.Location = new Point(6, 56);
+            radioButton4.Name = "radioButton4";
+            radioButton4.Size = new Size(140, 24);
+            radioButton4.TabIndex = 7;
+            radioButton4.TabStop = true;
+            radioButton4.Text = "Moving on curve";
+            radioButton4.UseVisualStyleBackColor = true;
+            radioButton4.CheckedChanged += radioButton4_CheckedChanged;
+            // 
+            // radioButton3
+            // 
+            radioButton3.AutoSize = true;
+            radioButton3.Location = new Point(6, 84);
+            radioButton3.Name = "radioButton3";
+            radioButton3.Size = new Size(87, 24);
+            radioButton3.TabIndex = 6;
+            radioButton3.TabStop = true;
+            radioButton3.Text = "Rotation";
+            radioButton3.UseVisualStyleBackColor = true;
+            // 
+            // checkBox1
+            // 
+            checkBox1.AutoSize = true;
+            checkBox1.Location = new Point(6, 26);
+            checkBox1.Name = "checkBox1";
+            checkBox1.Size = new Size(96, 24);
+            checkBox1.TabIndex = 5;
+            checkBox1.Text = "Animaton";
+            checkBox1.UseVisualStyleBackColor = true;
+            checkBox1.CheckedChanged += checkBox1_CheckedChanged;
+            // 
             // groupBox2
             // 
+            groupBox2.Controls.Add(radioButton5);
             groupBox2.Controls.Add(radioButton2);
             groupBox2.Controls.Add(radioButton1);
             groupBox2.Location = new Point(7, 205);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(154, 91);
+            groupBox2.Size = new Size(154, 120);
             groupBox2.TabIndex = 6;
             groupBox2.TabStop = false;
             groupBox2.Text = "Rotation";
+            // 
+            // radioButton5
+            // 
+            radioButton5.AutoSize = true;
+            radioButton5.Location = new Point(11, 86);
+            radioButton5.Name = "radioButton5";
+            radioButton5.Size = new Size(145, 24);
+            radioButton5.TabIndex = 2;
+            radioButton5.TabStop = true;
+            radioButton5.Text = "Graphics function";
+            radioButton5.UseVisualStyleBackColor = true;
+            radioButton5.CheckedChanged += radioButton5_CheckedChanged;
             // 
             // radioButton2
             // 
@@ -111,6 +171,7 @@
             radioButton2.TabStop = true;
             radioButton2.Text = "With filtering";
             radioButton2.UseVisualStyleBackColor = true;
+            radioButton2.CheckedChanged += radioButton2_CheckedChanged;
             // 
             // radioButton1
             // 
@@ -123,17 +184,6 @@
             radioButton1.Text = "Naive";
             radioButton1.UseVisualStyleBackColor = true;
             radioButton1.CheckedChanged += radioButton1_CheckedChanged;
-            // 
-            // checkBox1
-            // 
-            checkBox1.AutoSize = true;
-            checkBox1.Location = new Point(6, 26);
-            checkBox1.Name = "checkBox1";
-            checkBox1.Size = new Size(96, 24);
-            checkBox1.TabIndex = 5;
-            checkBox1.Text = "Animaton";
-            checkBox1.UseVisualStyleBackColor = true;
-            checkBox1.CheckedChanged += checkBox1_CheckedChanged;
             // 
             // groupBox1
             // 
@@ -186,41 +236,6 @@
             visiblePoylineCheckBox.UseVisualStyleBackColor = true;
             visiblePoylineCheckBox.CheckedChanged += visiblePoylineCheckBox_CheckedChanged;
             // 
-            // groupBox3
-            // 
-            groupBox3.Controls.Add(radioButton4);
-            groupBox3.Controls.Add(radioButton3);
-            groupBox3.Controls.Add(checkBox1);
-            groupBox3.Location = new Point(7, 302);
-            groupBox3.Name = "groupBox3";
-            groupBox3.Size = new Size(148, 114);
-            groupBox3.TabIndex = 7;
-            groupBox3.TabStop = false;
-            groupBox3.Text = "Animation";
-            // 
-            // radioButton3
-            // 
-            radioButton3.AutoSize = true;
-            radioButton3.Location = new Point(6, 84);
-            radioButton3.Name = "radioButton3";
-            radioButton3.Size = new Size(87, 24);
-            radioButton3.TabIndex = 6;
-            radioButton3.TabStop = true;
-            radioButton3.Text = "Rotation";
-            radioButton3.UseVisualStyleBackColor = true;
-            // 
-            // radioButton4
-            // 
-            radioButton4.AutoSize = true;
-            radioButton4.Location = new Point(6, 56);
-            radioButton4.Name = "radioButton4";
-            radioButton4.Size = new Size(140, 24);
-            radioButton4.TabIndex = 7;
-            radioButton4.TabStop = true;
-            radioButton4.Text = "Moving on curve";
-            radioButton4.UseVisualStyleBackColor = true;
-            radioButton4.CheckedChanged += radioButton4_CheckedChanged;
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -235,12 +250,12 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            groupBox3.ResumeLayout(false);
+            groupBox3.PerformLayout();
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
             groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)imagePictureBox).EndInit();
-            groupBox3.ResumeLayout(false);
-            groupBox3.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -261,5 +276,6 @@
         private GroupBox groupBox3;
         private RadioButton radioButton4;
         private RadioButton radioButton3;
+        private RadioButton radioButton5;
     }
 }

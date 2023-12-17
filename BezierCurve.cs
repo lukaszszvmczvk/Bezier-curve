@@ -2,6 +2,12 @@
 
 namespace lab3
 {
+    public enum Rotation
+    {
+        naive,
+        filter,
+        graphics
+    }
     public class BezierCurve
     {
         private PictureBox pictureBox;
@@ -20,7 +26,7 @@ namespace lab3
         public bool VisiblePolyline { get; set; }
         public Bitmap? Img { get; set; }
         public float pos { get; set; }
-        public bool UseNaiveRotation { get; set; }
+        public Rotation rotation { get; set; }
         public bool RotateAnimation { get; set; }
 
         public BezierCurve(PictureBox pictureBox)
@@ -30,7 +36,7 @@ namespace lab3
             pictureBox.MouseDown += canvasMouseDown;
             pictureBox.MouseUp += PictureBox_MouseUp;
             pictureBox.MouseMove += PictureBox_MouseMove;
-            UseNaiveRotation = true;
+            rotation = Rotation.naive;
             Img = null;
             InitializePoints();
             Draw();
@@ -145,9 +151,13 @@ namespace lab3
         }
         private Bitmap RotateBitmap(float angle)
         {
-            if(UseNaiveRotation)
+            if(rotation == Rotation.naive)
             {
                 return NaiveRotate(angle);
+            }
+            else if(rotation == Rotation.filter)
+            {
+                return RotateImageShear(angle);
             }
             else
             {
@@ -163,7 +173,7 @@ namespace lab3
 
                     g.DrawImage(Img, new Point(0, 0));
                 }
-                return RotateImageShear(angle);
+                return rotatedBitmap;
             }
         }
         private Bitmap NaiveRotate(float angle)
