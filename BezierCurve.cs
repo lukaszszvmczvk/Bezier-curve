@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Numerics;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
+﻿using System.Numerics;
 
 namespace lab3
 {
@@ -18,6 +9,7 @@ namespace lab3
         private float interval = 0.0001f;
         private float animationInterval = 0.01f;
         private int rotateAngle = 0;
+        private Bitmap rotatedImage;
         int? selectedPointId = null;
         private int N
         {
@@ -82,18 +74,18 @@ namespace lab3
             {
                 if (!RotateAnimation)
                 {
-                    Bitmap rotatedBitmap = RotateBitmap(angle);
+                    rotatedImage = RotateBitmap(angle);
                     using (Graphics g = Graphics.FromImage(bitmap))
                     {
-                        g.DrawImage(rotatedBitmap, new Point((int)p.X - rotatedBitmap.Width / 2, (int)p.Y - rotatedBitmap.Height / 2));
+                        g.DrawImage(rotatedImage, new Point((int)p.X - rotatedImage.Width / 2, (int)p.Y - rotatedImage.Height / 2));
                     }
                 }
                 else
                 {
-                    Bitmap rotatedBitmap = RotateBitmap(rotateAngle);
+                    rotatedImage = RotateBitmap(rotateAngle);
                     using (Graphics g = Graphics.FromImage(bitmap))
                     {
-                        g.DrawImage(rotatedBitmap, new Point((int)p.X - rotatedBitmap.Width / 2, (int)p.Y - rotatedBitmap.Height / 2));
+                        g.DrawImage(rotatedImage, new Point((int)p.X - rotatedImage.Width / 2, (int)p.Y - rotatedImage.Height / 2));
                     }
                 }
 
@@ -171,39 +163,78 @@ namespace lab3
 
                     g.DrawImage(Img, new Point(0, 0));
                 }
-                return rotatedBitmap;
+                return RotateImageShear(angle);
             }
         }
-        private Bitmap NaiveRotate(float degree)
+        private Bitmap NaiveRotate(float angle)
         {
-            double rads = degree * Math.PI / 180.0;
+            Bitmap dst = new Bitmap(Img.Width, Img.Height);
 
-            int width = Img.Width;
-            int height = Img.Height;
+            float radians = (float)(angle * Math.PI / 180);
 
-            Bitmap rotatedBitmap = new Bitmap(width, height);
+            float cosTheta = (float)Math.Cos(radians);
+            float sinTheta = (float)Math.Sin(radians);
 
-            var centerX = width / 2;
-            var centerY = height / 2;
-
-            for (int i = 0; i < rotatedBitmap.Height; i++)
+            var centerX = dst.Width / 2;
+            var centerY = dst.Height / 2;
+            for (int dx = 0; dx < dst.Width; dx++)
             {
-                for (int j = 0; j < rotatedBitmap.Width; j++)
+                for (int dy = 0; dy < dst.Height; dy++)
                 {
-                    var x = (i - centerX) * Math.Cos(rads) + (j - centerY) * Math.Sin(rads);
-                    var y = -(i - centerX) * Math.Sin(rads) + (j - centerY) * Math.Cos(rads);
+                    var x = dx - centerX;
+                    var y = dy - centerY;
 
-                    var sx = (int)Math.Round(x) + centerX;
-                    var sy = (int)Math.Round(y) + centerY;
+                    int sx = (int)(cosTheta * x + sinTheta * y) + centerX;
+                    int sy = (int)(-sinTheta * x + cosTheta * y) + centerY;
 
-                    if (sx >= 0 && sy >= 0 && sx < Img.Height && sy < Img.Width)
+                    if (sx >= 0 && sx < Img.Width && sy >= 0 && sy < Img.Height)
                     {
-                        rotatedBitmap.SetPixel(i, j, Img.GetPixel(sx, sy));
+                        dst.SetPixel(dx, dy, Img.GetPixel(sx, sy));
                     }
                 }
             }
 
+            return dst;
+        }
+        private Bitmap RotateImageShear(float degree)
+        {
+            double rads = degree * Math.PI / 180.0;
+            int width = Img.Width;
+            int height = Img.Height;
+
+            var centerX = width / 2;
+            var centerY = height / 2;
+
+            Bitmap rotatedBitmap = new Bitmap(width, height);
+
+            for (int i = 0; i < height; i++)
+            {
+                for (int j = 0; j < width; j++)
+                {
+                    int y = height - 1 - i - centerY;
+                    int x = width - 1 - j - centerX;
+
+                    (int new_y, int new_x) = Shear(rads, x, y);
+
+                    new_y = centerY - new_y;
+                    new_x = centerX - new_x;
+
+                    if (new_y >= 0 && new_y < height && new_x >= 0 && new_x < width)
+                    {
+                        rotatedBitmap.SetPixel(new_x, new_y, Img.GetPixel(j, i));
+                    }
+                }
+            }
             return rotatedBitmap;
+        }
+        private (int, int) Shear(double rads, int x, int y)
+        {
+            var tan = Math.Tan(rads / 2);
+            double new_x = x - Math.Tan(rads / 2) * y;
+            double new_y = y;
+            new_y = Math.Sin(rads)*new_x + new_y;
+            new_x = new_x - Math.Tan(rads / 2) * new_y;
+            return ((int)new_y, (int)new_x);
         }
 
         // Utility functions
