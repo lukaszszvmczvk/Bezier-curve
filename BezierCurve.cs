@@ -78,6 +78,9 @@ namespace lab3
             var p = GetPointOnCurve(pos);
             if (ControlPoints.Count > 2 && Img != null)
             {
+                if(rotatedImage != null)
+                    rotatedImage.Dispose();
+
                 if (!RotateAnimation)
                 {
                     rotatedImage = RotateBitmap(angle);
