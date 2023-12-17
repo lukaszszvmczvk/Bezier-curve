@@ -211,14 +211,25 @@ namespace lab3
         }
         private Bitmap RotateImageShear(float angle)
         {
-            float radians = (float)(-angle * Math.PI / 180);
             int width = Img.Width;
             int height = Img.Height;
+            Bitmap rotatedBitmap = new Bitmap(width, height);
 
+            if(angle == 180)
+            {
+                for(int y=0; y<height/2+1; ++y)
+                {
+                    for(int x=0; x<width; ++x)
+                    {
+                        rotatedBitmap.SetPixel(x, y, Img.GetPixel(x, height - y - 1));
+                        rotatedBitmap.SetPixel(x, height - y-1, Img.GetPixel(x, y));
+                    }
+                }
+            }
+
+            float radians = (float)(-angle * Math.PI / 180);
             var centerX = width / 2;
             var centerY = height / 2;
-
-            Bitmap rotatedBitmap = new Bitmap(width, height);
 
             for (int dy = 0; dy < height; dy++)
             {
