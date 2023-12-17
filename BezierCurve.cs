@@ -209,9 +209,9 @@ namespace lab3
 
             return dst;
         }
-        private Bitmap RotateImageShear(float degree)
+        private Bitmap RotateImageShear(float angle)
         {
-            double rads = degree * Math.PI / 180.0;
+            float radians = (float)(-angle * Math.PI / 180);
             int width = Img.Width;
             int height = Img.Height;
 
@@ -220,21 +220,21 @@ namespace lab3
 
             Bitmap rotatedBitmap = new Bitmap(width, height);
 
-            for (int i = 0; i < height; i++)
+            for (int dy = 0; dy < height; dy++)
             {
-                for (int j = 0; j < width; j++)
+                for (int dx = 0; dx < width; dx++)
                 {
-                    int y = height - 1 - i - centerY;
-                    int x = width - 1 - j - centerX;
+                    int x = dx - centerX;
+                    int y = dy - centerY;
 
-                    (int new_y, int new_x) = Shear(rads, x, y);
+                    (int sx, int sy) = Shear(radians, x, y);
 
-                    new_y = centerY - new_y;
-                    new_x = centerX - new_x;
+                    sx = sx + centerX;
+                    sy = sy + centerY;
 
-                    if (new_y >= 0 && new_y < height && new_x >= 0 && new_x < width)
+                    if (sy >= 0 && sy < height && sx >= 0 && sx < width)
                     {
-                        rotatedBitmap.SetPixel(new_x, new_y, Img.GetPixel(j, i));
+                        rotatedBitmap.SetPixel(dx, dy, Img.GetPixel(sx, sy));
                     }
                 }
             }
@@ -243,11 +243,11 @@ namespace lab3
         private (int, int) Shear(double rads, int x, int y)
         {
             var tan = Math.Tan(rads / 2);
-            double new_x = x - Math.Tan(rads / 2) * y;
+            double new_x = x - tan * y;
             double new_y = y;
             new_y = Math.Sin(rads)*new_x + new_y;
-            new_x = new_x - Math.Tan(rads / 2) * new_y;
-            return ((int)new_y, (int)new_x);
+            new_x = new_x - tan * new_y;
+            return ((int)new_x, (int)new_y);
         }
 
         // Utility functions
@@ -325,6 +325,7 @@ namespace lab3
             CurvePoints.Clear();
             ControlPoints.Clear();
             pos = 0;
+            rotateAngle = 0;
             Img = null;
         }
     }

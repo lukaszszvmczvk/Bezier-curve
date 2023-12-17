@@ -87,6 +87,7 @@ namespace lab3
             if (radioButton1.Checked)
             {
                 bezierCurve.rotation = Rotation.naive;
+                bezierCurve.Draw();
             }
         }
 
@@ -107,6 +108,7 @@ namespace lab3
             if (radioButton2.Checked)
             {
                 bezierCurve.rotation = Rotation.filter;
+                bezierCurve.Draw();
             }
         }
 
@@ -115,6 +117,7 @@ namespace lab3
             if (radioButton5.Checked)
             {
                 bezierCurve.rotation = Rotation.graphics;
+                bezierCurve.Draw();
             }
         }
     }
