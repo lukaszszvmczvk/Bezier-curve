@@ -31,6 +31,7 @@
             tableLayoutPanel1 = new TableLayoutPanel();
             pictureBox = new DoubleBufferedPictureBox();
             panel1 = new Panel();
+            button3 = new Button();
             groupBox3 = new GroupBox();
             radioButton4 = new RadioButton();
             radioButton3 = new RadioButton();
@@ -44,6 +45,7 @@
             button2 = new Button();
             button1 = new Button();
             visiblePoylineCheckBox = new CheckBox();
+            button4 = new Button();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox).BeginInit();
             panel1.SuspendLayout();
@@ -80,6 +82,8 @@
             // panel1
             // 
             panel1.BackColor = SystemColors.ControlLight;
+            panel1.Controls.Add(button4);
+            panel1.Controls.Add(button3);
             panel1.Controls.Add(groupBox3);
             panel1.Controls.Add(groupBox2);
             panel1.Controls.Add(groupBox1);
@@ -90,6 +94,16 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(164, 847);
             panel1.TabIndex = 1;
+            // 
+            // button3
+            // 
+            button3.Location = new Point(7, 494);
+            button3.Name = "button3";
+            button3.Size = new Size(154, 29);
+            button3.TabIndex = 8;
+            button3.Text = "Save polyline";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
             // 
             // groupBox3
             // 
@@ -236,6 +250,16 @@
             visiblePoylineCheckBox.UseVisualStyleBackColor = true;
             visiblePoylineCheckBox.CheckedChanged += visiblePoylineCheckBox_CheckedChanged;
             // 
+            // button4
+            // 
+            button4.Location = new Point(7, 461);
+            button4.Name = "button4";
+            button4.Size = new Size(154, 29);
+            button4.TabIndex = 9;
+            button4.Text = "Load polyline";
+            button4.UseVisualStyleBackColor = true;
+            button4.Click += button4_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -277,5 +301,7 @@
         private RadioButton radioButton4;
         private RadioButton radioButton3;
         private RadioButton radioButton5;
+        private Button button3;
+        private Button button4;
     }
 }

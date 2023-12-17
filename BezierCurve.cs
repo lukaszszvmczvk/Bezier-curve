@@ -1,4 +1,6 @@
 ﻿using System.Numerics;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace lab3
 {
@@ -8,6 +10,7 @@ namespace lab3
         filter,
         graphics
     }
+    [Serializable]
     public class BezierCurve
     {
         private PictureBox pictureBox;
@@ -21,8 +24,8 @@ namespace lab3
         {
             get { return ControlPoints.Count - 1; }
         }
-        private List<Point> CurvePoints { get; set; }
-        private List<Vector2> ControlPoints { get; set; }
+        public List<Point> CurvePoints { get; set; }
+        public List<Vector2> ControlPoints { get; set; }
         public bool VisiblePolyline { get; set; }
         public Bitmap? Img { get; set; }
         public float pos { get; set; }
@@ -41,6 +44,7 @@ namespace lab3
             InitializePoints();
             Draw();
         }
+        public BezierCurve() { }
 
         public void InitializePoints()
         {
@@ -338,6 +342,33 @@ namespace lab3
             pos = 0;
             rotateAngle = 0;
             Img = null;
+        }
+        public void Save(string filepath)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(BezierCurve));
+
+            using (var writer = new StreamWriter(filepath))
+            {
+                serializer.Serialize(writer, this);
+            }
+        }
+        public void Load(string filepath)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(BezierCurve));
+
+            // Declare an object variable of the type to be deserialized.
+            BezierCurve i;
+
+            using (Stream reader = new FileStream(filepath, FileMode.Open))
+            {
+                // Call the Deserialize method to restore the object's state.
+                i = (BezierCurve)serializer.Deserialize(reader);
+            }
+
+            this.CurvePoints = i.CurvePoints;
+            this.ControlPoints = i.ControlPoints;
+            this.rotation = i.rotation;
+            this.RotateAnimation = i.RotateAnimation;
         }
     }
 }

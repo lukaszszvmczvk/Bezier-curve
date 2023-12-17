@@ -1,3 +1,5 @@
+using System.Windows.Forms;
+
 namespace lab3
 {
     public partial class Form1 : Form
@@ -117,6 +119,39 @@ namespace lab3
             if (radioButton5.Checked)
             {
                 bezierCurve.rotation = Rotation.graphics;
+                bezierCurve.Draw();
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+            {
+                saveFileDialog.Filter = "Pliki XML (*.xml)|*.xml";
+                saveFileDialog.Title = "Wybierz miejsce i nazwê pliku do zapisu";
+
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string filePath = saveFileDialog.FileName;
+
+                    bezierCurve.Save(filePath);
+                }
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            openFileDialog1.Filter = "Pliki XML (*.xml)|*.xml";
+
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                string filePath = openFileDialog1.FileName;
+
+                imagePictureBox.Image = null;
+                bezierCurve.Clear();
+
+                bezierCurve.Load(filePath);
                 bezierCurve.Draw();
             }
         }
