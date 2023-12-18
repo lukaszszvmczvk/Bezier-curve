@@ -6,6 +6,7 @@ namespace lab3
     {
         BezierCurve bezierCurve;
         System.Windows.Forms.Timer timer;
+        bool generateImage = false;
         public Form1()
         {
             InitializeComponent();
@@ -160,7 +161,8 @@ namespace lab3
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
-            CreateImage();
+            if(generateImage)
+                CreateImage();
         }
         private void CreateImage()
         {
@@ -168,9 +170,9 @@ namespace lab3
             var size = 150;
             Bitmap bitmap = new Bitmap(size, size);
 
-            for(int i=0; i<size; i++)
+            for (int i = 0; i < size; i++)
             {
-                for(int j=0; j<size; j++)
+                for (int j = 0; j < size; j++)
                 {
                     double sat = (double)i / (double)size;
                     double light = (double)j / (double)size;
@@ -235,6 +237,12 @@ namespace lab3
             int blueValue = Convert.ToInt32((blue + m) * 255);
 
             return Color.FromArgb(redValue, greenValue, blueValue);
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            generateImage = checkBox2.Checked;
+            trackBar1_Scroll(sender, e);
         }
     }
 

@@ -31,6 +31,8 @@
             tableLayoutPanel1 = new TableLayoutPanel();
             pictureBox = new DoubleBufferedPictureBox();
             panel1 = new Panel();
+            checkBox2 = new CheckBox();
+            trackBar1 = new TrackBar();
             button4 = new Button();
             button3 = new Button();
             groupBox3 = new GroupBox();
@@ -46,15 +48,14 @@
             button2 = new Button();
             button1 = new Button();
             visiblePoylineCheckBox = new CheckBox();
-            trackBar1 = new TrackBar();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox).BeginInit();
             panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)trackBar1).BeginInit();
             groupBox3.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)imagePictureBox).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)trackBar1).BeginInit();
             SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -84,6 +85,7 @@
             // panel1
             // 
             panel1.BackColor = SystemColors.ControlLight;
+            panel1.Controls.Add(checkBox2);
             panel1.Controls.Add(trackBar1);
             panel1.Controls.Add(button4);
             panel1.Controls.Add(button3);
@@ -97,6 +99,25 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(164, 847);
             panel1.TabIndex = 1;
+            // 
+            // checkBox2
+            // 
+            checkBox2.AutoSize = true;
+            checkBox2.Location = new Point(13, 529);
+            checkBox2.Name = "checkBox2";
+            checkBox2.Size = new Size(137, 24);
+            checkBox2.TabIndex = 11;
+            checkBox2.Text = "Generate image";
+            checkBox2.UseVisualStyleBackColor = true;
+            checkBox2.CheckedChanged += checkBox2_CheckedChanged;
+            // 
+            // trackBar1
+            // 
+            trackBar1.Location = new Point(7, 559);
+            trackBar1.Name = "trackBar1";
+            trackBar1.Size = new Size(148, 56);
+            trackBar1.TabIndex = 10;
+            trackBar1.Scroll += trackBar1_Scroll;
             // 
             // button4
             // 
@@ -263,14 +284,6 @@
             visiblePoylineCheckBox.UseVisualStyleBackColor = true;
             visiblePoylineCheckBox.CheckedChanged += visiblePoylineCheckBox_CheckedChanged;
             // 
-            // trackBar1
-            // 
-            trackBar1.Location = new Point(30, 544);
-            trackBar1.Name = "trackBar1";
-            trackBar1.Size = new Size(128, 56);
-            trackBar1.TabIndex = 10;
-            trackBar1.Scroll += trackBar1_Scroll;
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -285,13 +298,13 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)trackBar1).EndInit();
             groupBox3.ResumeLayout(false);
             groupBox3.PerformLayout();
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
             groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)imagePictureBox).EndInit();
-            ((System.ComponentModel.ISupportInitialize)trackBar1).EndInit();
             ResumeLayout(false);
         }
 
@@ -316,5 +329,6 @@
         private Button button3;
         private Button button4;
         private TrackBar trackBar1;
+        private CheckBox checkBox2;
     }
 }
