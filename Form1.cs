@@ -17,6 +17,8 @@ namespace lab3
             timer.Interval = 1;
             radioButton1.Checked = true;
             radioButton4.Checked = true;
+            trackBar1.Minimum = 0;
+            trackBar1.Maximum = 360;
         }
 
         private void Timer_Tick(object? sender, EventArgs e)
@@ -154,6 +156,85 @@ namespace lab3
                 bezierCurve.Load(filePath);
                 bezierCurve.Draw();
             }
+        }
+
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+            CreateImage();
+        }
+        private void CreateImage()
+        {
+            double hue = trackBar1.Value;
+            var size = 150;
+            Bitmap bitmap = new Bitmap(size, size);
+
+            for(int i=0; i<size; i++)
+            {
+                for(int j=0; j<size; j++)
+                {
+                    double sat = (double)i / (double)size;
+                    double light = (double)j / (double)size;
+                    var color = HSLToRGB(hue, sat, light);
+                    bitmap.SetPixel(i, j, color);
+                }
+            }
+
+            int size2 = (int)(150 * 1.5);
+            var bmp = new Bitmap(size2, size2);
+            using (Graphics g = Graphics.FromImage(bmp))
+            {
+                var x = (int)(size2 - 150) / 2;
+                g.DrawImage(bitmap, new Point(x, x));
+            }
+            bezierCurve.Img = bmp;
+            imagePictureBox.Image = new Bitmap(bitmap, imagePictureBox.Width, imagePictureBox.Height);
+            bezierCurve.Draw();
+        }
+
+        private Color HSLToRGB(double hue, double saturation, double lightness)
+        {
+            double c = (1 - Math.Abs(2 * lightness - 1)) * saturation;
+            double x = c * (1 - Math.Abs((hue / 60) % 2 - 1));
+            double m = lightness - c / 2;
+
+            double red = 0, green = 0, blue = 0;
+
+            if (0 <= hue && hue < 60)
+            {
+                red = c;
+                green = x;
+            }
+            else if (60 <= hue && hue < 120)
+            {
+                red = x;
+                green = c;
+            }
+            else if (120 <= hue && hue < 180)
+            {
+                green = c;
+                blue = x;
+            }
+            else if (180 <= hue && hue < 240)
+            {
+                green = x;
+                blue = c;
+            }
+            else if (240 <= hue && hue < 300)
+            {
+                red = x;
+                blue = c;
+            }
+            else if (300 <= hue && hue < 360)
+            {
+                red = c;
+                blue = x;
+            }
+
+            int redValue = Convert.ToInt32((red + m) * 255);
+            int greenValue = Convert.ToInt32((green + m) * 255);
+            int blueValue = Convert.ToInt32((blue + m) * 255);
+
+            return Color.FromArgb(redValue, greenValue, blueValue);
         }
     }
 

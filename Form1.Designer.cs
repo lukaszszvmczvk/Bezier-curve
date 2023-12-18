@@ -31,6 +31,7 @@
             tableLayoutPanel1 = new TableLayoutPanel();
             pictureBox = new DoubleBufferedPictureBox();
             panel1 = new Panel();
+            button4 = new Button();
             button3 = new Button();
             groupBox3 = new GroupBox();
             radioButton4 = new RadioButton();
@@ -45,7 +46,7 @@
             button2 = new Button();
             button1 = new Button();
             visiblePoylineCheckBox = new CheckBox();
-            button4 = new Button();
+            trackBar1 = new TrackBar();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox).BeginInit();
             panel1.SuspendLayout();
@@ -53,6 +54,7 @@
             groupBox2.SuspendLayout();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)imagePictureBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)trackBar1).BeginInit();
             SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -82,6 +84,7 @@
             // panel1
             // 
             panel1.BackColor = SystemColors.ControlLight;
+            panel1.Controls.Add(trackBar1);
             panel1.Controls.Add(button4);
             panel1.Controls.Add(button3);
             panel1.Controls.Add(groupBox3);
@@ -94,6 +97,16 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(164, 847);
             panel1.TabIndex = 1;
+            // 
+            // button4
+            // 
+            button4.Location = new Point(7, 461);
+            button4.Name = "button4";
+            button4.Size = new Size(154, 29);
+            button4.TabIndex = 9;
+            button4.Text = "Load polyline";
+            button4.UseVisualStyleBackColor = true;
+            button4.Click += button4_Click;
             // 
             // button3
             // 
@@ -250,15 +263,13 @@
             visiblePoylineCheckBox.UseVisualStyleBackColor = true;
             visiblePoylineCheckBox.CheckedChanged += visiblePoylineCheckBox_CheckedChanged;
             // 
-            // button4
+            // trackBar1
             // 
-            button4.Location = new Point(7, 461);
-            button4.Name = "button4";
-            button4.Size = new Size(154, 29);
-            button4.TabIndex = 9;
-            button4.Text = "Load polyline";
-            button4.UseVisualStyleBackColor = true;
-            button4.Click += button4_Click;
+            trackBar1.Location = new Point(30, 544);
+            trackBar1.Name = "trackBar1";
+            trackBar1.Size = new Size(128, 56);
+            trackBar1.TabIndex = 10;
+            trackBar1.Scroll += trackBar1_Scroll;
             // 
             // Form1
             // 
@@ -280,6 +291,7 @@
             groupBox2.PerformLayout();
             groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)imagePictureBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)trackBar1).EndInit();
             ResumeLayout(false);
         }
 
@@ -303,5 +315,6 @@
         private RadioButton radioButton5;
         private Button button3;
         private Button button4;
+        private TrackBar trackBar1;
     }
 }
